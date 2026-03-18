@@ -42,6 +42,29 @@ service cloud.firestore {
     //   - message: string (required)
     //   - createdAt: string (required, ISO 8601)
     //
+    // Collection: promotions
+    // Document ID: promoId
+    // Fields:
+    //   - uid: string (required, matches auth.uid)
+    //   - type: string (required, enum: ['image', 'video'])
+    //   - url: string (required)
+    //   - prompt: string (required)
+    //   - createdAt: string (required, ISO 8601)
+    //
+    // Collection: voiceCallUsage
+    // Document ID: usageId (typically {uid}_{date})
+    // Fields:
+    //   - uid: string (required, matches auth.uid)
+    //   - date: string (required, YYYY-MM-DD)
+    //   - durationSeconds: number (required)
+    //   - lastUpdatedAt: string (required, ISO 8601)
+    //
+    // Collection: knowledge
+    // Document ID: knowledgeId
+    // Fields:
+    //   - content: string (required)
+    //   - createdAt: string (required, ISO 8601)
+    //
     // ===============================================================
 
     // ===============================================================
@@ -87,10 +110,11 @@ service cloud.firestore {
     }
 
     function isValidOrder(data) {
-      return data.keys().hasAll(['uid', 'items', 'status', 'createdAt']) &&
+      return data.keys().hasAll(['uid', 'items', 'status', 'total', 'createdAt']) &&
              data.uid == request.auth.uid &&
              data.items is list &&
-             data.status in ['pending', 'completed', 'cancelled'] &&
+             data.status in ['pending', 'processing', 'out-for-delivery', 'completed', 'cancelled'] &&
+             data.total is number &&
              isValidDateString(data.createdAt);
     }
 
@@ -106,6 +130,29 @@ service cloud.firestore {
       return data.keys().hasAll(['uid', 'message', 'createdAt']) &&
              data.uid == request.auth.uid &&
              data.message is string && data.message.size() > 0 && data.message.size() < 5000 &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidPromotion(data) {
+      return data.keys().hasAll(['uid', 'type', 'url', 'prompt', 'createdAt']) &&
+             data.uid == request.auth.uid &&
+             data.type in ['image', 'video'] &&
+             data.url is string && data.url.size() > 0 &&
+             data.prompt is string && data.prompt.size() > 0 && data.prompt.size() < 2000 &&
+             isValidDateString(data.createdAt);
+    }
+
+    function isValidVoiceCallUsage(data) {
+      return data.keys().hasAll(['uid', 'date', 'durationSeconds', 'lastUpdatedAt']) &&
+             data.uid == request.auth.uid &&
+             data.date is string && data.date.matches("^\\d{4}-\\d{2}-\\d{2}$") &&
+             data.durationSeconds is number && data.durationSeconds >= 0 &&
+             isValidDateString(data.lastUpdatedAt);
+    }
+
+    function isValidKnowledge(data) {
+      return data.keys().hasAll(['content', 'createdAt']) &&
+             data.content is string && data.content.size() > 0 && data.content.size() < 10000 &&
              isValidDateString(data.createdAt);
     }
 
@@ -137,6 +184,23 @@ service cloud.firestore {
       allow read: if isAdmin();
       allow create: if isAuthenticated() && isValidFeedback(request.resource.data);
       allow update, delete: if isAdmin();
+    }
+
+    match /promotions/{promoId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && isValidPromotion(request.resource.data);
+      allow update, delete: if isAdmin();
+    }
+
+    match /voiceCallUsage/{usageId} {
+      allow read: if isDocOwner() || isAdmin();
+      allow create, update: if isAuthenticated() && isValidVoiceCallUsage(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /knowledge/{knowledgeId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin() && isValidKnowledge(request.resource.data);
     }
   }
 }

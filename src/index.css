@@ -9,37 +9,78 @@
   --color-primary: #FF6321;
   --color-primary-dark: #E55216;
   --color-accent: #FFD700;
-  --color-stone-50: #F9F8F6;
-  --color-stone-100: #F1EFEA;
-  --color-stone-200: #E4E1D8;
-  --color-stone-300: #D1CDC1;
-  --color-stone-400: #A8A291;
-  --color-stone-500: #7D7767;
-  --color-stone-600: #5D584B;
-  --color-stone-700: #444036;
-  --color-stone-800: #2D2A24;
-  --color-stone-900: #1C1A16;
+  
+  --color-stone-50: var(--bg-50);
+  --color-stone-100: var(--bg-100);
+  --color-stone-200: var(--bg-200);
+  --color-stone-300: var(--bg-300);
+  --color-stone-400: var(--bg-400);
+  --color-stone-500: var(--bg-500);
+  --color-stone-600: var(--bg-600);
+  --color-stone-700: var(--bg-700);
+  --color-stone-800: var(--bg-800);
+  --color-stone-900: var(--bg-900);
+}
+
+:root {
+  --bg-50: #F9F8F6;
+  --bg-100: #F1EFEA;
+  --bg-200: #E4E1D8;
+  --bg-300: #D1CDC1;
+  --bg-400: #A8A291;
+  --bg-500: #7D7767;
+  --bg-600: #5D584B;
+  --bg-700: #444036;
+  --bg-800: #2D2A24;
+  --bg-900: #1C1A16;
+  --text-main: #1C1A16;
+  --card-bg: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.5);
+}
+
+.dark {
+  --bg-50: #0C0B09;
+  --bg-100: #161512;
+  --bg-200: #23211D;
+  --bg-300: #35322C;
+  --bg-400: #5D584B;
+  --bg-500: #7D7767;
+  --bg-600: #A8A291;
+  --bg-700: #D1CDC1;
+  --bg-800: #E4E1D8;
+  --bg-900: #F9F8F6;
+  --text-main: #F9F8F6;
+  --card-bg: rgba(22, 21, 18, 0.8);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --glass-bg: rgba(22, 21, 18, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.05);
 }
 
 @layer base {
   body {
-    @apply bg-stone-50 text-stone-900 selection:bg-primary/20 selection:text-primary font-sans;
+    @apply bg-stone-50 text-stone-900 selection:bg-primary/20 selection:text-primary font-sans transition-colors duration-500;
   }
   
   h1, h2, h3, h4 {
-    @apply font-display font-bold;
+    @apply font-display font-bold tracking-tight;
   }
 }
 
 @layer components {
+  .glass {
+    @apply bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] shadow-2xl;
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-stone-200 rounded-full hover:bg-stone-300 transition-colors;
+    @apply bg-stone-200 dark:bg-stone-800 rounded-full hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors;
   }
   
   .no-scrollbar::-webkit-scrollbar {

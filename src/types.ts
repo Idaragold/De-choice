@@ -12,3 +12,12 @@ export interface Message {
   text: string;
   timestamp: number;
 }
+
+declare global {
+  interface Window {
+    aistudio: {
+      hasSelectedApiKey: () => Promise<boolean>;
+      openSelectKey: () => Promise<void>;
+    };
+  }
+}

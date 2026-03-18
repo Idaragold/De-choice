@@ -38,22 +38,22 @@ export default function Feedback() {
     <div className="flex flex-col gap-8 h-full overflow-y-auto pr-2 custom-scrollbar">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-display text-stone-900">Send Feedback</h2>
-        <p className="text-stone-500 text-sm">Help us improve De Choice by sharing your thoughts</p>
+        <h2 className="text-2xl font-display text-stone-900 dark:text-white">Send Feedback</h2>
+        <p className="text-stone-500 dark:text-stone-400 text-sm">Help us improve De Choice by sharing your thoughts</p>
       </div>
 
       {/* Feedback Form */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white p-8 rounded-3xl border border-stone-200 shadow-sm"
+        className="bg-white dark:bg-stone-800 p-8 rounded-3xl border border-stone-200 dark:border-stone-700 shadow-sm"
       >
         <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-primary">
           <MessageCircle size={32} />
         </div>
         
-        <h3 className="text-lg font-bold text-stone-900 mb-2">We'd love to hear from you!</h3>
-        <p className="text-stone-500 text-sm mb-8 leading-relaxed">
+        <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-2">We'd love to hear from you!</h3>
+        <p className="text-stone-500 dark:text-stone-400 text-sm mb-8 leading-relaxed">
           Whether it's a suggestion, a compliment, or a concern, your feedback is invaluable to us.
         </p>
 
@@ -61,7 +61,7 @@ export default function Feedback() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mb-8 p-4 bg-green-50 border border-green-100 text-green-600 rounded-2xl flex items-center gap-3 text-sm"
+            className="mb-8 p-4 bg-green-50 dark:bg-green-900/30 border border-green-100 dark:border-green-800 text-green-600 dark:text-green-400 rounded-2xl flex items-center gap-3 text-sm"
           >
             <CheckCircle2 size={24} />
             <div>
@@ -72,7 +72,7 @@ export default function Feedback() {
         )}
 
         {error && (
-          <div className="mb-8 p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl flex items-center gap-3 text-sm">
+          <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/30 border border-red-100 dark:border-red-800 text-red-600 dark:text-red-400 rounded-2xl flex items-center gap-3 text-sm">
             <AlertCircle size={24} />
             <p className="font-bold">{error}</p>
           </div>
@@ -85,7 +85,7 @@ export default function Feedback() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Tell us what's on your mind..."
-              className="w-full p-5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm min-h-[200px] resize-none"
+              className="w-full p-5 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm min-h-[200px] resize-none text-stone-900 dark:text-white"
               required
             />
           </div>
@@ -102,13 +102,13 @@ export default function Feedback() {
 
       {/* Info Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-8">
-        <div className="bg-stone-50 p-6 rounded-3xl border border-stone-100">
-          <h4 className="text-sm font-bold text-stone-900 mb-2">Direct Support</h4>
-          <p className="text-xs text-stone-500 leading-relaxed">For urgent issues, please call us directly at +234 800 DE CHOICE.</p>
+        <div className="bg-stone-50 dark:bg-stone-900 p-6 rounded-3xl border border-stone-100 dark:border-stone-800">
+          <h4 className="text-sm font-bold text-stone-900 dark:text-white mb-2">Direct Support</h4>
+          <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">For urgent issues, please call us directly at +234 800 DE CHOICE.</p>
         </div>
-        <div className="bg-stone-50 p-6 rounded-3xl border border-stone-100">
-          <h4 className="text-sm font-bold text-stone-900 mb-2">Visit Us</h4>
-          <p className="text-xs text-stone-500 leading-relaxed">Abak Road, Uyo, Akwa Ibom State. Open daily 8:00 AM - 10:00 PM.</p>
+        <div className="bg-stone-50 dark:bg-stone-900 p-6 rounded-3xl border border-stone-100 dark:border-stone-800">
+          <h4 className="text-sm font-bold text-stone-900 dark:text-white mb-2">Visit Us</h4>
+          <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">Abak Road, Uyo, Akwa Ibom State. Open daily 8:00 AM - 10:00 PM.</p>
         </div>
       </div>
     </div>

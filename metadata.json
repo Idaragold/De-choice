@@ -1,5 +1,5 @@
 {
   "name": "De Choice Fast Food - Uyo's Finest",
   "description": "The ultimate dining companion for De Choice Fast Food, Uyo. Order your favorite meals, explore our menu, and share your experience with our AI-powered assistant.",
-  "requestFramePermissions": ["geolocation"]
+  "requestFramePermissions": ["geolocation", "microphone"]
 }
